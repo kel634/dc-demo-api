@@ -7,12 +7,12 @@ namespace dc_demo_api.Models
     {
         public VariantType()
         {
-            AssetVariant = new HashSet<AssetVariant>();
+            AssetVariants = new HashSet<AssetVariant>();
         }
 
         public int VariantTypeId { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<AssetVariant> AssetVariant { get; set; }
+        public virtual ICollection<AssetVariant> AssetVariants { get; set; }
     }
 }

@@ -7,8 +7,7 @@ namespace dc_demo_api.Models
     {
         public Asset()
         {
-            AssetMetadata = new HashSet<AssetMetadata>();
-            AssetVariant = new HashSet<AssetVariant>();
+            AssetVariants = new HashSet<AssetVariant>();
         }
 
         public int AssetId { get; set; }
@@ -18,7 +17,7 @@ namespace dc_demo_api.Models
         public int FolderId { get; set; }
 
         public virtual Folder Folder { get; set; }
-        public virtual ICollection<AssetMetadata> AssetMetadata { get; set; }
-        public virtual ICollection<AssetVariant> AssetVariant { get; set; }
+        public virtual AssetMetadata AssetMetadata { get; set; }
+        public virtual ICollection<AssetVariant> AssetVariants { get; set; }
     }
 }

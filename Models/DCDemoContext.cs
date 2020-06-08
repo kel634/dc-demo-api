@@ -42,7 +42,7 @@ namespace dc_demo_api.Models
                     .HasMaxLength(255);
 
                 entity.HasOne(d => d.Folder)
-                    .WithMany(p => p.Asset)
+                    .WithMany(p => p.Assets)
                     .HasForeignKey(d => d.FolderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Asset_fk0");
@@ -51,8 +51,8 @@ namespace dc_demo_api.Models
             modelBuilder.Entity<AssetMetadata>(entity =>
             {
                 entity.HasOne(d => d.Asset)
-                    .WithMany(p => p.AssetMetadata)
-                    .HasForeignKey(d => d.AssetId)
+                    .WithOne(p => p.AssetMetadata)
+                    .HasForeignKey<Asset>(d => d.AssetId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("AssetMetadata_fk0");
             });
@@ -64,13 +64,13 @@ namespace dc_demo_api.Models
                     .HasMaxLength(255);
 
                 entity.HasOne(d => d.Asset)
-                    .WithMany(p => p.AssetVariant)
+                    .WithMany(p => p.AssetVariants)
                     .HasForeignKey(d => d.AssetId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("AssetVariant_fk0");
 
                 entity.HasOne(d => d.VariantType)
-                    .WithMany(p => p.AssetVariant)
+                    .WithMany(p => p.AssetVariants)
                     .HasForeignKey(d => d.VariantTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("AssetVariant_fk1");
@@ -82,8 +82,8 @@ namespace dc_demo_api.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.HasOne(d => d.Parent)
-                    .WithMany(p => p.InverseParent)
+                entity.HasOne(d => d.ParentFolder)
+                    .WithMany(p => p.SubFolders)
                     .HasForeignKey(d => d.ParentId)
                     .HasConstraintName("Folder_fk0");
             });

@@ -29,6 +29,8 @@ namespace dc_demo_api
     {
       services.AddDbContext<DCDemoContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DCDemoDatabase")));
+      services.AddControllers().AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
       services.AddControllers();
     }
 

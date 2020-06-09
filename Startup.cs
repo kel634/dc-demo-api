@@ -31,6 +31,17 @@ namespace dc_demo_api
         options.UseSqlServer(Configuration.GetConnectionString("DCDemoDatabase")));
       services.AddControllers().AddNewtonsoftJson(options =>
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+      services.AddCors(options =>
+        {
+          options.AddDefaultPolicy(
+            builder =>
+            {
+              builder
+                .WithOrigins("http://localhost:3000", "http://localhost", "https://dc-demo-web.azurewebsites.net")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
+        });
       services.AddControllers();
     }
 
@@ -45,6 +56,8 @@ namespace dc_demo_api
       app.UseHttpsRedirection();
 
       app.UseRouting();
+
+      app.UseCors();
 
       app.UseAuthorization();
 

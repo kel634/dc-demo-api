@@ -10,6 +10,7 @@ namespace dc_demo_api.Models
         public Asset()
         {
             AssetVariants = new HashSet<AssetVariant>();
+            Metadata = new List<AssetMetadata>();
         }
 
         [Key]
@@ -22,5 +23,8 @@ namespace dc_demo_api.Models
 
         public virtual Folder Folder { get; set; }
         public virtual ICollection<AssetVariant> AssetVariants { get; set; }
+
+        [NotMapped]
+        public List<AssetMetadata> Metadata { get; set; }
     }
 }

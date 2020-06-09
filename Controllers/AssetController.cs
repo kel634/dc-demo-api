@@ -41,7 +41,16 @@ namespace dc_demo_api.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<Asset>> GetAsset(int id)
     {
+      var storageConnectionString = _configuration["ConnectionStrings:AzureStorageConnectionString"];
+      var storage = new StorageClient(storageConnectionString);
+
       var asset = await _context.Asset.Include(asset => asset.AssetVariants).FirstOrDefaultAsync(asset => asset.AssetId == id);
+      var blobClient = storage.GetFile("assets", asset.FileName);
+
+      foreach (KeyValuePair<string, string> entry in blobClient.GetProperties().Value.Metadata)
+      {
+        asset.Metadata.Add(new AssetMetadata(entry.Key, entry.Value));
+      }
 
       if (asset == null)
       {

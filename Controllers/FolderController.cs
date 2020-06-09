@@ -39,6 +39,7 @@ namespace dc_demo_api.Controllers
     {
       // must load every folder because EF Core does not handle recursive relations
       var folders = await _context.Folder
+       .Include(folder => folder.Assets)
        .Include(folder => folder.SubFolders)
        .ToListAsync();
       folders

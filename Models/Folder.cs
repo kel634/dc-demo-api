@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace dc_demo_api.Models
 {
@@ -11,6 +13,8 @@ namespace dc_demo_api.Models
             SubFolders = new HashSet<Folder>();
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FolderId { get; set; }
         public int? ParentId { get; set; }
         public string Name { get; set; }

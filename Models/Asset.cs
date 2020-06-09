@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace dc_demo_api.Models
 {
@@ -10,6 +12,8 @@ namespace dc_demo_api.Models
             AssetVariants = new HashSet<AssetVariant>();
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AssetId { get; set; }
         public string FileName { get; set; }
         public string DisplayName { get; set; }
@@ -17,7 +21,6 @@ namespace dc_demo_api.Models
         public int FolderId { get; set; }
 
         public virtual Folder Folder { get; set; }
-        public virtual AssetMetadata AssetMetadata { get; set; }
         public virtual ICollection<AssetVariant> AssetVariants { get; set; }
     }
 }

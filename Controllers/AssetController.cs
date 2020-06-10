@@ -44,7 +44,10 @@ namespace dc_demo_api.Controllers
       var storageConnectionString = _configuration["ConnectionStrings:AzureStorageConnectionString"];
       var storage = new StorageClient(storageConnectionString);
 
-      var asset = await _context.Asset.Include(asset => asset.AssetVariants).FirstOrDefaultAsync(asset => asset.AssetId == id);
+      var asset = await _context.Asset
+        .Include(asset => asset.AssetVariants)
+        .ThenInclude(av => av.VariantType)
+        .FirstOrDefaultAsync(asset => asset.AssetId == id);
       var blobClient = storage.GetFile("assets", asset.FileName);
 
       foreach (KeyValuePair<string, string> entry in blobClient.GetProperties().Value.Metadata)
